@@ -5,13 +5,12 @@
       <th>Alamat</th>
       <th>NPWP</th>
       <th>Asosiasi</th>
-      <th>Klasifikasi</th>
       <th>Option</th>
     </tr>
   </thead>
   <tbody>
     <?php
-    if( count( $listform ) > 0 ){
+    if( count( $listform->result_array() ) > 0 ){
       foreach ($listform->result_array() as $key) {
         # code...
         $btn = '<div class="btn-group">
@@ -21,9 +20,8 @@
         echo '<tr>
               <td>'.$key['atasnama'].'</td>
               <td>'.$key['alamat'].'</td>
+              <td>'.$key['npwp'].'</td>
               <td>'.$key['asosiasi'].'</td>
-              <td>'.$key['klasifikasi'].'</td>
-              <td>'.$key['status'].'</td>
               <td>'.$btn.'</td>
             </tr>';
       }
