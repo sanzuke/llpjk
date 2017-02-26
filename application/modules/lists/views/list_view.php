@@ -5,7 +5,7 @@
       <th>Alamat</th>
       <th>NPWP</th>
       <th>Asosiasi</th>
-      <th>Option</th>
+      <th>Opsi</th>
     </tr>
   </thead>
   <tbody>
@@ -15,7 +15,8 @@
         # code...
         $btn = '<div class="btn-group">
                   <button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
-                  <button class="btn btn-sm btn-danger""><i class="fa fa-times"></i></button>
+                  <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+                  <a href="'.base_url().'lihat/generateqrcode/'.$key['Link'].'" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-qrcode"></i></a>
                 </div>';
         echo '<tr>
               <td>'.$key['atasnama'].'</td>
