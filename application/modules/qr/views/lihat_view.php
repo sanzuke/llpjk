@@ -14,6 +14,15 @@
 
 
   <title><?php echo $title_page ?></title>
+  <style>
+  .table td, th {
+     text-align: center;
+  }
+  th {
+      background-color: gray;
+      color: white;
+  }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -23,28 +32,36 @@
       <div class="col-md-4 col-lg-6">
         <div class="panel panel-default">
           <!-- <div class="panel-heading"><h3>Data Tenaga Ahli</h3></div> -->
-          <div class="panel-body" align="center">
-            SERTIFIKAT KEAHLIAN ATAS NAMA :<br>
-            <b><?php echo $atasnama ?></b><br>
+          <div class="panel-body" align="center" style="font-family:times">
+            <h4>SERTIFIKAT KEAHLIAN ATAS NAMA :<br>
+            <?php echo $atasnama ?><br>
             ALAMAT : <br>
             <?php echo $alamat ?><br>
             NPWP : <?php echo $npwp ?><br>
             ASOSIASI : <br>
-            <?php echo $asosiasi ?><br><br>
-            <table class="table table-striped">
+            <?php echo $asosiasi ?></h4>
+            <center><h4>KODE KLASIFIKASI</h4></center>
+            <table class="table table-striped table-bordered" style="font-size:12px;">
               <thead>
-                <tr style="font-size:10px;">
-                  <th>KODE SUBKLASIFIKASI</th>
+                <tr>
+                  <th>KODE</th>
                   <th>SUBKLASIFIKASI</th>
                   <th>SUBKUALIFIKASI</th>
                 </tr>
               </thead>
               <tbody>
-
-              </tbody> 
+                <?php
+                foreach ($klasifikasi->result_array() as $key) {
+                  echo '<tr>
+                        <td>'.$key['kode_klasifikasi'].'</td>
+                        <td>'.$key['subklasifikasi'].'</td>
+                        <td>'.$key['subkualifikasi'].'</td>
+                      </tr>';
+                }
+                ?>
+              </tbody>
             </table>
-            SERTIFIKAT TERDAFTAR DI LPKJ (VALID)<br>
-            <?php echo $qrcode ?>
+            <h4>SERTIFIKAT TERDAFTAR DI LPKJ (VALID)</h4>
           </div>
         </div>
       </div>

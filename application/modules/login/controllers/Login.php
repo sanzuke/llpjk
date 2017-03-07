@@ -29,7 +29,7 @@ class Login extends MX_Controller {
 
 	public function logout($value='')
 	{
-		$this->session->destroy();
+		$this->session->sess_destroy();
 		redirect("login");
 	}
 }

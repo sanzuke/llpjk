@@ -1,3 +1,8 @@
+<style>
+input, textarea {
+  text-transform: uppercase;
+}
+</style>
 <form role="form" action="<?php echo base_url() ?>form/save" method="post">
   <div class="col-md-6">
     <div class="form-group">
@@ -45,9 +50,10 @@
           <th>Kode</th>
           <th>Subklasifikasi</th>
           <th>Subkualifikasi</th>
+          <th>hapus</td>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="dataKla">
 
       </tbody>
     </table>
@@ -90,7 +96,7 @@
               foreach ($dataklasifikasi->result_array() as $key) {
                 # code...
                 $btn = '<div class="btn-group">
-                          <button class="btn btn-sm btn-info"><i class="fa fa-plus"></i></button>
+                          <button class="btn btn-sm btn-info add" onclick="addKlasifikasi(\''.$key['kode_klasifikasi'].'\')"><i class="fa fa-plus"></i></button>
                         </div>';
                 echo '<tr>
                       <td>'.$key['kode_klasifikasi'].'</td>
@@ -119,3 +125,43 @@
     </div>
   </div>
 </div>
+<script>
+var url = '<?php echo $url ?>form/';
+$(document).ready(function(){
+  loadKla();
+
+  $(".btn-danger").click(function() {
+    var psn = confirm("Anda yakin akan membatalkan ?");
+    if(psn){
+      window.location.reload();
+    }
+  })
+});
+function addKlasifikasi(id){
+  $.getJSON(url+"addklasifikasi",{id : id}, function(json){
+    $('#dataKla').html('');
+    $.each(json, function(idx, val){
+      $('#dataKla').append('<tr><td>'+val.kode_klasifikasi+'</td><td>'+val.subklasifikasi+'</td><td>'+val.subkualifikasi+'</td><td><button type="button" class="btn btn-danger" onclick="delKla(\''+idx+'\')"><i class="fa fa-times"></i></button></td></tr>');
+    })
+  })
+  $("#myModal").modal("hide");
+}
+
+function loadKla() {
+  $.getJSON(url+"loadDataKlasifikasiSession", function(json){
+    $('#dataKla').html('');
+    $.each(json, function(idx, val){
+      $('#dataKla').append('<tr><td>'+val.kode_klasifikasi+'</td><td>'+val.subklasifikasi+'</td><td>'+val.subkualifikasi+'</td><td><button type="button" class="btn btn-danger" onclick="delKla(\''+idx+'\')"><i class="fa fa-times"></i></button></td></tr>');
+    })
+  })
+}
+
+function delKla(idx){
+  $.getJSON(url+"delKlaSess",{id : idx}, function(json){
+    $('#dataKla').html('');
+    $.each(json, function(idx, val){
+      $('#dataKla').append('<tr><td>'+val.kode_klasifikasi+'</td><td>'+val.subklasifikasi+'</td><td>'+val.subkualifikasi+'</td><td><button type="button" class="btn btn-danger" onclick="delKla(\''+idx+'\')"><i class="fa fa-times"></i></button></td></tr>');
+    })
+  })
+}
+</script>

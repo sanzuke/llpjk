@@ -17,4 +17,17 @@ class Lists extends MX_Controller {
 		$this->load->view('template', $data);
 	}
 
+	public function delete()
+	{
+		$id = $this->uri->segment(3);
+
+		$result = $this->Core_models->deleteAhli($id);
+		if($result){
+			$this->session->set_flashdata("message", "Data telah dihapus");
+		} else {
+			$this->session->set_flashdata("message", "Data gagal dihapus");
+		}
+		redirect("list");
+	}
+
 }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Lihat extends MX_Controller {
+class Qr extends MX_Controller {
 
 	public function index()
 	{
@@ -11,7 +11,7 @@ class Lihat extends MX_Controller {
 		$this->load->view('lihat_view', $data);
   }
 
-  public function partner($value='')
+  public function id($value='')
   {
     $id = $this->uri->segment(3);
     $brs = $this->Core_models->getSK($id);
@@ -30,6 +30,8 @@ class Lihat extends MX_Controller {
 		$params['savename'] = FCPATH.'tes.png';
 		$this->ciqrcode->generate($params);
 
+		$data['klasifikasi'] = $this->Core_models->getKlasifikasi($brs->id);
+
     $data['qrcode'] = '<img src="'.base_url().'tes.png" class="thumbnail img-responsive" />';
 
 		$this->load->view('lihat_view', $data);
@@ -41,7 +43,7 @@ class Lihat extends MX_Controller {
     $brs = $this->Core_models->getSK($id);
 
     header("Content-Type: image/png");
-		$link = base_url().'lihat/partner/'.$brs->Link;
+		$link = base_url().'qr/id/'.$brs->Link;
 
     $qr['data'] = $link; //'Selamat Datang di http://h4nk.blogspot.com';
 

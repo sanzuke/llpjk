@@ -103,5 +103,53 @@ class Core_models extends CI_Model {
           return array("atasnama"=>"", "alamat"=>"","npwp"=>"", "asosiasi"=>"", "Link"=>"");
         }
       }
+
+      public function getKlasifikasi($value)
+      {
+        $q = $this->db->query("SELECT dt.kode_klasifikasi, k.subklasifikasi, k.subkualifikasi
+          	FROM cm_sk_kla_detil dt,
+          		 ss_klasifikasi k
+          WHERE dt.kode_klasifikasi = k.kode_klasifikasi
+            AND dt.id_sk = {$value}");
+        return $q;
+      }
+
+      public function saveDetailKla()
+      {
+        $data = $this->session->userdata("addKlasifikasi");
+        $id = $this->db->insert_id();
+        $i = 0;
+        // print_r($data);
+        while($i <= count($data)-1){
+          $id_sk = $data[$i];
+          $hsl = $this->cekDetilKla($id, $id_sk);
+          // echo $hsl;
+          if($hsl == 0){
+            // echo $data[0];
+            $this->db->query("INSERT INTO cm_sk_kla_detil VALUES(NULL, '{$id}', '{$id_sk}')");
+          }
+          $i++;
+        }
+
+      }
+
+      public function cekDetilKla($id='',$value='')
+      {
+        $q = $this->db->query("SELECT * FROM cm_sk_kla_detil WHERE kode_klasifikasi = '{$value}' AND id_sk = '{$id}'");
+        $jml = $q->num_rows();
+        return $jml;
+      }
+
+      public function deleteAhli($id)
+      {
+        // $id = $this->input->post("id", true);
+        $q = $this->db->delete("cm_sk", array("id"=>$id));
+        if($q){
+          $qDetil = $this->db->delete("cm_sk_kla_detil", array("id_sk"=>$id));
+          return true;
+        } else {
+          return false;
+        }
+      }
 }
 ?>

@@ -1,8 +1,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Atas Nama</th>
-      <th>Alamat</th>
+      <th>Atas Nama /Alamat</th>
+      <!-- <th>Alamat</th> -->
       <th>NPWP</th>
       <th>Asosiasi</th>
       <th>Opsi</th>
@@ -15,12 +15,11 @@
         # code...
         $btn = '<div class="btn-group">
                   <button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
-                  <button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
-                  <a href="'.base_url().'lihat/generateqrcode/'.$key['Link'].'" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-qrcode"></i></a>
+                  <button class="btn btn-sm btn-danger" data-id="'.$key['id'].'"><i class="fa fa-times"></i></button>
+                  <a href="'.base_url().'qr/generateqrcode/'.$key['Link'].'" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-qrcode"></i></a>
                 </div>';
         echo '<tr>
-              <td>'.$key['atasnama'].'</td>
-              <td>'.$key['alamat'].'</td>
+              <td><b>'.$key['atasnama'].'</b><br>'.$key['alamat'].'</td>
               <td>'.$key['npwp'].'</td>
               <td>'.$key['asosiasi'].'</td>
               <td>'.$btn.'</td>
@@ -32,3 +31,14 @@
     ?>
   </tbody>
 </table>
+<script>
+  $(document).ready(function(){
+    $(".btn-danger").click(function(){
+      var id = $(this).attr("data-id");
+      var psn = confirm("Anda yakin akan menghapus data?");
+      if(psn){
+        window.location = '<?php echo base_url() ?>lists/delete/'+id;
+      }
+    })
+  })
+</script>

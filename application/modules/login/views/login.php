@@ -3,14 +3,14 @@
   <!-- <script src="<?php echo base_url() .'assets/js/TweenLite.min.js' ?>"></script> -->
   <script src="<?php echo base_url() .'assets/js/jquery.js' ?>"></script>
   <script src="<?php echo base_url() .'assets/js/bootstrap.js' ?>"></script>
-  <script src="<?php echo base_url() .'assets/js/login.js' ?>"></script>
+  <!-- <script src="<?php echo base_url() .'assets/js/login.js' ?>"></script> -->
   <link href="<?php echo base_url() .'assets/css/bootstrap.css' ?>" rel="stylesheet">
-  <link href="<?php echo base_url() .'assets/css/login.css' ?>" rel="stylesheet">
-  <link href="<?php echo base_url() .'assets/css/font-awesome.css' ?>" rel="stylesheet">
+  <!-- <link href="<?php echo base_url() .'assets/css/login.css' ?>" rel="stylesheet"> -->
+  <link href="<?php echo base_url() .'assets/font-awesome/css/font-awesome.css' ?>" rel="stylesheet">
   <title>Login Area</title>
 </head>
 <body>
-<div class="container">
+<div class="container"><br><br>
     <div class="row vertical-offset-100">
     	<div class="col-md-4 col-md-offset-4">
     		<div class="panel panel-default">
