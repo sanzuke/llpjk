@@ -7,23 +7,23 @@ input, textarea {
   <div class="col-md-6">
     <div class="form-group">
         <label>Sertifikat Ahli Atas Nama</label>
-        <input class="form-control" name="atasnama">
+        <input class="form-control" name="atasnama" required="required">
         <!-- <p class="help-block">Example block-level help text here.</p> -->
     </div>
 
     <div class="form-group">
         <label>Alamat</label>
-        <textarea class="form-control" name="alamat"></textarea>
+        <textarea class="form-control" name="alamat" required="required"></textarea>
     </div>
 
     <div class="form-group">
         <label>NPWP</label>
-        <input class="form-control" name="npwp" id="npwp">
+        <input class="form-control" name="npwp" id="npwp" required="required">
     </div>
 
     <div class="form-group">
         <label>Asosiasi</label>
-        <input class="form-control" name="asosiasi">
+        <input class="form-control" name="asosiasi" required="required">
     </div>
   </div>
 

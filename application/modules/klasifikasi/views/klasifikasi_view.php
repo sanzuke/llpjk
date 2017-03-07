@@ -11,18 +11,18 @@
 
           <div class="form-group">
               <label>Kode Klasifikasi</label>
-              <input class="form-control" name="kode">
+              <input class="form-control" name="kode" id="kode" type="number" required="required">
               <!-- <p class="help-block">Example block-level help text here.</p> -->
           </div>
 
           <div class="form-group">
               <label>Subklasifikasi</label>
-              <input class="form-control" name="subklasifikasi">
+              <input class="form-control" name="subklasifikasi" id="subklasifikasi" required="required">
           </div>
 
           <div class="form-group">
               <label>Subkualifikasi</label>
-              <input class="form-control" name="subkualifikasi">
+              <input class="form-control" name="subkualifikasi" id="subkualifikasi" required="required">
           </div>
 
           <!-- <div class="form-group input-group">
@@ -34,7 +34,7 @@
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button> -->
-        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
       </div>
       </form>
@@ -42,7 +42,7 @@
   </div>
 </div>
 
-<button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Tambah</button><br>
+<button class="btn btn-primary" ><i class="fa fa-plus"></i> Tambah</button><br>
 <p class="help-block"><?php echo $message ?></p>
 <hr>
 <table class="table table-striped">
@@ -59,8 +59,8 @@
     foreach ($dataklasifikasi->result_array() as $key) {
       # code...
       $btn = '<div class="btn-group">
-                <button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
-                <button class="btn btn-sm btn-danger""><i class="fa fa-times"></i></button>
+                <button class="btn btn-sm btn-info" onclick="edit(\''.$key['kode_klasifikasi'].'|'.$key['subklasifikasi'].'|'.$key['subkualifikasi'].'\')"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger" onclick="del(\''.$key['no'].'\')"><i class="fa fa-times"></i></button>
               </div>';
       echo '<tr>
             <td>'.$key['kode_klasifikasi'].'</td>
@@ -72,3 +72,29 @@
     ?>
   </tbody>
 </table>
+<script>
+  $(document).ready(function(){
+    $(".btn-primary").click(function(){
+      $("#kode").val("").attr("readonly", false);
+      $("#subklasifikasi").val("");
+      $("#subkualifikasi").val("");
+
+      $("#myModal").modal("show");
+    })
+  })
+  function edit(param) {
+    var isi = param.split("|")
+    $("#kode").val(isi[0]).attr("readonly", true);
+    $("#subklasifikasi").val(isi[1]);
+    $("#subkualifikasi").val(isi[2]);
+
+    $("#myModal").modal("show");
+  }
+
+  function del(id){
+    var psn = confirm("Anda yakin akan menghapus klasifikasi?");
+    if(psn){
+      window.location = '<?php echo base_url() ?>klasifikasi/delete/'+id;
+    }
+  }
+</script>

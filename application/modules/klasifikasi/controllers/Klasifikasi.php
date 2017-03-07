@@ -25,11 +25,30 @@ class Klasifikasi extends MX_Controller {
 		$subklasifikasi = $this->input->post("subklasifikasi", true);
 		$subkualifikasi = $this->input->post("subkualifikasi", true);
 
-		$q = $this->db->query("INSERT INTO ss_klasifikasi VALUES(NULL, '{$kode}', '{$subklasifikasi}','{$subkualifikasi}')");
+		$cek = $this->db->query("SELECT * FROM ss_klasifikasi WHERE kode_klasifikasi = '{$kode}' ");
+		$jml = $cek->num_rows();
+		if( $jml > 0 ){
+			$q = $this->db->query("UPDATE ss_klasifikasi SET subklasifikasi = '{$subklasifikasi}', subkualifikasi = '{$subkualifikasi}' WHERE kode_klasifikasi = '{$kode}'");
+		} else {
+			$q = $this->db->query("INSERT INTO ss_klasifikasi VALUES(NULL, '{$kode}', '{$subklasifikasi}','{$subkualifikasi}')");
+		}
 		if($q){
 			$this->session->set_flashdata("message", "<span class='label label-success'>Data telah disimpan</span>");
 		} else {
 			$this->session->set_flashdata("message", "<span class='label label-danger'>Data gagal disimpan</span>");
+		}
+
+		redirect("klasifikasi");
+	}
+
+	public function delete()
+	{
+		$id = $this->uri->segment(3);
+		$q = $this->db->delete("ss_klasifikasi", array("no"=>$id));
+		if($q){
+			$this->session->set_flashdata("message", "<span class='label label-success'>Data telah dihapus</span>");
+		} else {
+			$this->session->set_flashdata("message", "<span class='label label-danger'>Data gagal dihapus</span>");
 		}
 
 		redirect("klasifikasi");

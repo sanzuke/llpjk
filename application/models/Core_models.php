@@ -151,5 +151,20 @@ class Core_models extends CI_Model {
           return false;
         }
       }
+
+    public function getCountAhli()
+    {
+      $q = $this->db->query("SELECT * FROM cm_sk");
+      $jml = $q->num_rows();
+      return $jml;
+    }
+
+    public function getCountKlasifikasi()
+    {
+      $q = $this->db->query("SELECT * FROM ss_klasifikasi");
+      $jml = $q->num_rows();
+      return $jml;
+    }
+
 }
 ?>
