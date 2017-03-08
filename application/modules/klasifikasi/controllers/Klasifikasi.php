@@ -33,9 +33,9 @@ class Klasifikasi extends MX_Controller {
 			$q = $this->db->query("INSERT INTO ss_klasifikasi VALUES(NULL, '{$kode}', '{$subklasifikasi}','{$subkualifikasi}')");
 		}
 		if($q){
-			$this->session->set_flashdata("message", "<span class='label label-success'>Data telah disimpan</span>");
+			$this->session->set_flashdata("message", "<div class='alert alert-success'><strong>Berhasil!</strong> Data telah disimpan</div>");
 		} else {
-			$this->session->set_flashdata("message", "<span class='label label-danger'>Data gagal disimpan</span>");
+			$this->session->set_flashdata("message", "<div class='alert alert-danger'><strong>Gagal!</strong> Data gagal disimpan</div>");
 		}
 
 		redirect("klasifikasi");

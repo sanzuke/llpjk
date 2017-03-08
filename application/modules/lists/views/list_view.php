@@ -1,3 +1,4 @@
+<?php $this->Core_models->getMessage() ?>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -14,7 +15,7 @@
       foreach ($listform->result_array() as $key) {
         # code...
         $btn = '<div class="btn-group">
-                  <button class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
+                  <a class="btn btn-sm btn-info" href="'.base_url() . 'form/edit/'.$key['id'].'"><i class="fa fa-edit"></i></a>
                   <button class="btn btn-sm btn-danger" data-id="'.$key['id'].'"><i class="fa fa-times"></i></button>
                   <a href="'.base_url().'qr/generateqrcode/'.$key['Link'].'" target="_blank" class="btn btn-sm btn-default"><i class="fa fa-qrcode"></i></a>
                 </div>';

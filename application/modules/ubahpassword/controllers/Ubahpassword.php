@@ -17,4 +17,37 @@ class Ubahpassword extends MX_Controller {
 		$this->load->view('template', $data);
   }
 
+	public function save()
+	{
+		$pasLama = $this->input->post("passwordlama", true);
+		$pasBaru = $this->input->post("passwordbaru", true);
+		$pasBaru2 = $this->input->post("passwordbaru2", true);
+
+		$status = 0;
+
+		if( md5($pasLama) != md5($this->session->userdata("password")) ){
+			$this->session->set_flashdata("message", "<div class='alert alert-danger'><strong>Gagal!</strong> Password lama tidak sesuai</div>");
+			$status = 1;
+		} else {
+			$status = 0;
+		}
+
+		if( $pasBaru != $pasBaru2){
+			$this->session->set_flashdata("message", "<div class='alert alert-danger'><strong>Gagal!</strong> Password baru tidak sama</div>");
+			$status = 1;
+		} else {
+			$status = 0;
+		}
+
+		if($status == 0 ){
+			$q = $this->db->query("UPDATE ss_user SET password = '{$pasBaru}' WHERE userid = 'admin'");
+			if($q){
+				$this->session->set_flashdata("message", "<div class='alert alert-success'><strong>Berhasil!</strong> Data telah diubah {$id}</div>");
+				redirect("ubahpassword");
+			} else {
+				$this->session->set_flashdata("message", "<div class='alert alert-danger'><strong>Gagal!</strong> Data gagal diubah</div>");
+			}
+		}
+	}
+
 }

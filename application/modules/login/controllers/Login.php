@@ -20,6 +20,7 @@ class Login extends MX_Controller {
 		if( count($cek->result_array()) > 0){
 			$this->session->set_flashdata("message", "Login berhasil");
 			$this->session->set_userdata("username", $u);
+			$this->session->set_userdata("password", md5($p));
 			redirect("dashboard");
 		} else {
 			$this->session->set_flashdata("message", "Cek kembali user/password anda");

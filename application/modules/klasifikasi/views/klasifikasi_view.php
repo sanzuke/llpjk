@@ -43,7 +43,7 @@
 </div>
 
 <button class="btn btn-primary" ><i class="fa fa-plus"></i> Tambah</button><br>
-<p class="help-block"><?php echo $message ?></p>
+<?php $this->Core_models->getMessage() ?>
 <hr>
 <table class="table table-striped">
   <thead>

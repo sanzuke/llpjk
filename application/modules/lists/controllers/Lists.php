@@ -27,7 +27,7 @@ class Lists extends MX_Controller {
 		} else {
 			$this->session->set_flashdata("message", "Data gagal dihapus");
 		}
-		redirect("list");
+		redirect("lists");
 	}
 
 }

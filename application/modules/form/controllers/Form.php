@@ -18,6 +18,37 @@ class Form extends MX_Controller {
 		$data['title_page'] = 'Formulir Input Tenaga Ahli Baru';
 		$data['dataklasifikasi'] = $this->Core_models->loadKlasifikasi();
 		$data['url'] = base_url();
+
+		$data['id_konten'] = $this->uri->segment(3);
+		$data['dataAhli'] = '';
+		$data['dataAhliDetil'] = '';
+
+		$this->load->view('template', $data);
+	}
+
+	public function edit()
+	{
+		$cekUserLogin = $this->session->userdata("username");
+
+		if( !isset($cekUserLogin) )
+			redirect("login");
+
+		$this->session->unset_userdata("addKlasifikasi");
+		$this->loadDataKlasifikasiSession();
+
+    $data['content_page'] = 'form_view';
+		$data['title_page'] = 'Formulir Input Tenaga Ahli Baru';
+		$data['dataklasifikasi'] = $this->Core_models->loadKlasifikasi();
+		$data['url'] = base_url();
+
+		$data['id_konten'] = $this->uri->segment(3);
+		$data['dataAhli'] = $this->Core_models->loadDataAhli($data['id_konten']);
+		$data['dataAhliDetil'] = $this->Core_models->getKlasifikasi($data['id_konten']);
+
+		if( count($data['dataAhliDetil']) > 0 ){
+			$this->Core_models->setKlaToSess($data['id_konten']);
+		}
+
 		$this->load->view('template', $data);
 	}
 
@@ -30,15 +61,30 @@ class Form extends MX_Controller {
 		$created_by = $this->session->userdata("username");
 		$created_date = date("Y-m-d H:i:s");
 		$linkCode = md5($an.$npwp.$created_date);
+		$op = $this->input->post("op", true);
 
-		$save  = $this->db->query("INSERT INTO cm_sk VALUES(NULL, '{$an}','{$alamat}','{$npwp}','{$asosiasi}','1','{$linkCode}','{$created_by}','{$created_date}')");
+		$id = $this->input->post("id", true);
 
-		if($save){
-			$this->session->set_flashdata("message", "<span class='label label-success'>Data telah disimpan</span>");
-			$this->Core_models->saveDetailKla();
-			redirect("lists");
+		if($op == "false" || $op == 'FALSE'){
+			$save  = $this->db->query("INSERT INTO cm_sk VALUES(NULL, '{$an}','{$alamat}','{$npwp}','{$asosiasi}','1','{$linkCode}','{$created_by}','{$created_date}')");
+
+			if($save){
+				$this->session->set_flashdata("message", "<div class='alert alert-success'><strong>Berhasil!</strong> Data telah disimpan</div>");
+				$this->Core_models->saveDetailKla('');
+				redirect("lists");
+			} else {
+				$this->session->set_flashdata("message", "<div class='alert alert-danger'><strong>Gagal!</strong> Data gagal disimpan</div>");
+			}
 		} else {
-			$this->session->set_flashdata("message", "<span class='label label-danger'>Data gagal disimpan</span>");
+			$save  = $this->db->query("UPDATE cm_sk SET atasnama ='{$an}', alamat = '{$alamat}', npwp = '{$npwp}', asosiasi = '{$asosiasi}', Link = '{$linkCode}' WHERE id = '{$id}' ");
+
+			if($save){
+				$this->session->set_flashdata("message", "<div class='alert alert-success'><strong>Berhasil!</strong> Data telah diubah {$id}</div>");
+				$this->Core_models->saveDetailKla($id);
+				redirect("lists");
+			} else {
+				$this->session->set_flashdata("message", "<div class='alert alert-danger'><strong>Gagal!</strong> Data gagal diubah</div>");
+			}
 		}
 	}
 

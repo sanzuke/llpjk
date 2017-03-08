@@ -114,14 +114,25 @@ class Core_models extends CI_Model {
         return $q;
       }
 
-      public function saveDetailKla()
+      public function saveDetailKla($id_konten='')
       {
         $data = $this->session->userdata("addKlasifikasi");
-        $id = $this->db->insert_id();
+        $tmp = array();
+        foreach ($data as $key => $value) {
+          array_push($tmp, $value);
+        }
+        // $id = $this->db->insert_id();
+        if($id_konten == ''){
+          $id = $this->db->insert_id();
+        } else {
+          $id = $id_konten;
+          $qDetil = $this->db->delete("cm_sk_kla_detil", array("id_sk"=>$id));
+        }
+
         $i = 0;
-        // print_r($data);
-        while($i <= count($data)-1){
-          $id_sk = $data[$i];
+        print_r($tmp);
+        while($i <= count($tmp)-1){
+          $id_sk = $tmp[$i];
           $hsl = $this->cekDetilKla($id, $id_sk);
           // echo $hsl;
           if($hsl == 0){
@@ -164,6 +175,31 @@ class Core_models extends CI_Model {
       $q = $this->db->query("SELECT * FROM ss_klasifikasi");
       $jml = $q->num_rows();
       return $jml;
+    }
+
+    public function loadDataAhli($value='')
+    {
+      $q = $this->db->query("SELECT * FROM cm_sk WHERE id='{$value}'");
+      return $q;
+    }
+    public function setKlaToSess($value='')
+    {
+      $q = $this->db->query("SELECT kode_klasifikasi FROM cm_sk_kla_detil WHERE id_sk='{$value}'");
+      $data =  array();
+      foreach ($q->result_array() as $key) {
+          array_push($data, $key['kode_klasifikasi'] );
+      }
+      $this->session->set_userdata("addKlasifikasi", $data);
+      return true;
+    }
+
+    public function getMessage()
+    {
+      $isi = $this->session->flashdata("message");
+
+      if( $isi != "" ){
+        echo $isi;
+      }
     }
 
 }

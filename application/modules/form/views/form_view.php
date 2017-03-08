@@ -1,29 +1,51 @@
+<?php
+if($id_konten != ""){
+  $dataAhliArr = $dataAhli->row();
+  $nama = $dataAhliArr->atasnama;
+  $alamat = $dataAhliArr->alamat;
+  $npwp = $dataAhliArr->npwp;
+  $asosiasi = $dataAhliArr->asosiasi;
+  $id = $dataAhliArr->id;
+  // $dataAhliDetilArr = $dataAhliDetil->result_array();
+  $op = 'true';
+} else {
+  $nama = '';
+  $alamat = '';
+  $npwp = '';
+  $asosiasi = '';
+  $op = 'false';
+  $id = '';
+}
+?>
 <style>
 input, textarea {
   text-transform: uppercase;
 }
 </style>
+<?php $this->Core_models->getMessage() ?>
 <form role="form" action="<?php echo base_url() ?>form/save" method="post">
   <div class="col-md-6">
     <div class="form-group">
         <label>Sertifikat Ahli Atas Nama</label>
-        <input class="form-control" name="atasnama" required="required">
+        <input class="form-control" name="atasnama" required="required" value="<?php echo $nama ?>">
+        <input type="hidden" class="form-control" name="op" value="<?php echo $op ?>">
+        <input type="hidden" class="form-control" name="id" value="<?php echo $id ?>">
         <!-- <p class="help-block">Example block-level help text here.</p> -->
     </div>
 
     <div class="form-group">
         <label>Alamat</label>
-        <textarea class="form-control" name="alamat" required="required"></textarea>
+        <textarea class="form-control" name="alamat" required="required"><?php echo $alamat ?></textarea>
     </div>
 
     <div class="form-group">
         <label>NPWP</label>
-        <input class="form-control" name="npwp" id="npwp" required="required">
+        <input class="form-control" name="npwp" id="npwp" required="required" value="<?php echo $npwp ?>">
     </div>
 
     <div class="form-group">
         <label>Asosiasi</label>
-        <input class="form-control" name="asosiasi" required="required">
+        <input class="form-control" name="asosiasi" required="required" value="<?php echo $asosiasi ?>">
     </div>
   </div>
 

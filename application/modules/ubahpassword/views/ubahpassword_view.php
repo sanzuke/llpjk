@@ -1,20 +1,21 @@
+<?php $this->Core_models->getMessage() ?>
 <form role="form" action="<?php echo base_url() ?>ubahpassword/save" method="post">
   <div class="col-md-6">
     <div class="form-group">
         <label>Password Lama</label>
-        <input class="form-control" name="passwordlama">
+        <input class="form-control" type="password" name="passwordlama">
         <!-- <p class="help-block">Example block-level help text here.</p> -->
     </div>
 
     <div class="form-group">
         <label>Password Baru</label>
-        <input class="form-control" name="passwordbaru">
+        <input class="form-control" type="password" name="passwordbaru">
         <!-- <p class="help-block">Example block-level help text here.</p> -->
     </div>
 
     <div class="form-group">
         <label>Password Baru Lagi</label>
-        <input class="form-control" name="passwordbaru2">
+        <input class="form-control" type="password" name="passwordbaru2">
         <!-- <p class="help-block">Example block-level help text here.</p> -->
     </div>
 
